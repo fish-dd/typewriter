@@ -1,0 +1,3 @@
+min_width = 60
+#temporal text setting
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at neque magna. Aliquam nisl tortor, auctor eget nulla porta, laoreet faucibus felis. Nulla pretium condimentum lectus vel euismod. Cras consequat massa justo, in feugiat ex fringilla in. Phasellus porttitor lorem ut purus semper tempor. In placerat risus ligula, in dignissim libero elementum id. Donec fermentum rhoncus nulla, et congue tortor blandit sit amet. Morbi venenatis magna eu felis tincidunt, sit amet efficitur enim efficitur. Pellentesque finibus leo et auctor pellentesque. Donec eu elit ante. Duis rhoncus tristique euismod."
