@@ -2,6 +2,9 @@ import shutil
 from math import floor
 from time import sleep
 from config import *
+import keyboard
+
+text = ""
 
 def output(text):
     #gets terminal sizes
@@ -14,7 +17,8 @@ def output(text):
 
     #spliting text for strings
     strs = [text[i:i + doc_size - 2] for i in range (0, len(text), doc_size-2)]
-    strs[-1] = strs[-1] + " " * ((doc_size - 2) - len(strs[-1]))
+    if strs != []:
+        strs[-1] = strs[-1] + " " * ((doc_size - 2) - len(strs[-1]))
     for i in range(y - 2 - len(strs)):
         strs.append(" " * (doc_size - 2))
 
@@ -30,6 +34,18 @@ def output(text):
     
     return output
 
+def on_key_press(event):
+    temp = text
+    global text
+    text = temp + event
+
+
+def lang_change():
+    print("Смена языка")
+    raise Exception("test_lang_change_exception")
+
+keyboard.on_press(on_key_press)
+keyboard.add_hotkey("shift + alt", lang_change)
 while True:
     print(output(text), end = "")
     sleep(0.1)
