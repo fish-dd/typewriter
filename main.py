@@ -1,10 +1,14 @@
-import shutil
+import shutil, os, queue
 from math import floor
 from time import sleep
 from config import *
-import keyboard
+from readchar import readkey, key
+from threading import Thread
+#dont forgot to remove unused modules
 
 text = ""
+char = [None]
+allowed_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 */-+=_'\"[]{}|!@#$%^&*()?.<>,~`"
 
 def output(text):
     #gets terminal sizes
@@ -34,18 +38,25 @@ def output(text):
     
     return output
 
-def on_key_press(event):
-    temp = text
-    global text
-    text = temp + event
+def render_config(text_queue):
+    text = ""
+    while True:
+        try:
+            text = text_queue.get()
+            print(output(text), end = "")
+            sleep(0.05)
+        except queue.Empty:
+            pass
 
-
-def lang_change():
-    print("Смена языка")
-    raise Exception("test_lang_change_exception")
-
-keyboard.on_press(on_key_press)
-keyboard.add_hotkey("shift + alt", lang_change)
+text_queue = queue.Queue()
+renderer = Thread(target = render_config, args = (text_queue,), daemon = True)
+renderer.start()
 while True:
-    print(output(text), end = "")
-    sleep(0.1)
+    getchar = readkey()
+    if getchar == None:
+        pass
+    elif getchar in allowed_chars:
+        text += getchar
+    elif getchar == key.BACKSPACE:
+        text = text[:-1]
+    text_queue.put(text)
