@@ -8,9 +8,10 @@ from threading import Thread
 
 text = ""
 char = [None]
+allowed_chars = ""
 with open("allowed_chars.txt", "r") as file:
     for i in file:
-        allowed_chars = i
+        allowed_chars += i
 
 def output(text):
     #gets terminal sizes
