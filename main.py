@@ -21,11 +21,17 @@ def output(text):
     if x < min_width:
         raise(Exception("too_small_terminal_width"))
     
-    cntr_br = 0
-    while "\n" in text:
-        if text[cntr_br] == "\n":
-            text = text[:len(text) - cntr_br - 1] + " " * ((doc_size - 2) - (len(text) // (doc_size - 2))) + text[cntr_br + 2:]
-        cntr_br += 1
+    br_strs = text.split("\n")
+    spcs_strs = []
+    for i in br_strs:
+        if len(i) > doc_size - 2:
+            str_i = i + " " * (doc_size - 2 - (len(i) // (doc_size - 2)))
+        elif len(i) <= doc_size - 2:
+            str_i = i + " " * (doc_size - 2 - len(i))
+        spcs_strs.append(str_i)
+    
+    spcs_strs[-1] = br_strs[-1]
+    text = "".join(spcs_strs)
     
     #blinking cursor timer
     cursor_timer = time_ns() // 1000000
@@ -33,7 +39,7 @@ def output(text):
 
     if time_ns() // 1000000 - cursor_timer > 1000:
         cursor_timer = time_ns() // 1000000
-        show_cursor = show_cursor
+        show_cursor = not(show_cursor)
 
     if show_cursor == True:
         text += "█"
