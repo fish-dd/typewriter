@@ -1,1 +1,0 @@
-min_width = 60
