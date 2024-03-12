@@ -1,28 +1,42 @@
-class Doc_UI():
-    import shutil
-    from math import floor
-    from threading import Thread
-    from configs.config import min_width
-    def __init__(self):
-        pass
+import shutil
+from math import floor
+from threading import Thread
+from configs.config import *
 
-    def doc_output(self, text):
+class Doc_UI():
+    def __init__(self):
+        self.text = ""
+
+    def doc_output(self, text_data):
         """Function, which displays document in the terminal\n
         Using:
-        >>> doc_output(text = text)
+        >>> doc_output(add_text)
         """
-        min_width = self.min_width
-        shutil = self.shutil
-        floor = self.floor
+
+        from readchar import key
+        from os import system
+
+        got_text = text_data.get_data()
+        match got_text:
+            case key.BACKSPACE:
+                self.text = self.text[:-1]
+                text_data.set_data("")
+            case _:
+                self.text = self.text + got_text
+
+        #do_exec = True
+        #try:
+        #    if self.text == text_copy:
+        #        do_exec = False
+        #except:
+        #    do_exec = False
+        
         text = self.text
+        #text_copy = self.text
 
-        #gets terminal sizes
+        #gets terminal sizes, sets width of doc
         x, y = shutil.get_terminal_size()
-        doc_size = floor(x / 2.5) if floor(x / 2.5) >= min_width else min_width
-
-        #raises exception if terminal too narrow
-        if x < min_width:
-            raise(Exception("too_small_terminal_width"))
+        doc_size = floor(x / (100 / width_percent)) if floor(x / (100 / width_percent)) >= min_width else min_width
         
         #breaklines realisation
         br_strs = text.split("\n")
@@ -55,9 +69,15 @@ class Doc_UI():
         #final output
         output = " " * int((x - doc_size) / 2) + "┏" + "━" * (doc_size - 2) + "┓" + " " * int((x - doc_size) / 2) + "\n" + \
                 text_area + \
-                " " * int((x - doc_size) / 2) + "┗" + "━" * (doc_size - 2) + "┛" + " " * int((x - doc_size) / 2)\
+                " " * int((x - doc_size) / 2) + "┗" + "━" * (doc_size - 2) + "┛" + " " * int((x - doc_size) / 2) + " " * first_line_shift
         
+        #raises exception if terminal too narrow
+        if x < min_width:
+            text = f"Your terminal is too small. (width < {min_width})"
+        
+        #if do_exec:
         return output
 
-
+if __name__ == "__main__":
+    print("You are running a wrong file. Try run main.py.")
     

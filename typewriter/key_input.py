@@ -1,19 +1,22 @@
-def input_handler(allowed_chars, text, text_queue):
+def input_handler(allowed_chars, text_queue):
     """Handle the key presses"""
     from readchar import readkey, key
 
     while True:
-        text_queue.put(text, block = False, timeout = 0.05)
         getchar = readkey()
 
         if getchar in allowed_chars:
-            text += getchar  
+            text = getchar  
 
         match getchar:
             case key.BACKSPACE:
-                text = text[:-1]
+                text = key.BACKSPACE
             case key.ENTER:
-                text += "\n"
+                text = "\n"
             case key.TAB:
-                text += "    "
-        
+                text = "    "
+
+        text_queue.put(text, block = False, timeout = 0.05)
+
+if __name__ == "__main__":
+    print("You are running a wrong file. Try run main.py.")
