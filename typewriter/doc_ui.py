@@ -1,6 +1,5 @@
 import shutil
 from math import floor
-from threading import Thread
 from configs.config import *
 
 class Doc_UI():
@@ -13,16 +12,17 @@ class Doc_UI():
         >>> doc_output(add_text)
         """
 
-        from readchar import key
-        from os import system
+        #from readchar import key
+        #from os import system
 
         got_text = text_data.get_data()
         match got_text:
-            case key.BACKSPACE:
+            case "code_bckspce":
                 self.text = self.text[:-1]
                 text_data.set_data("")
             case _:
                 self.text = self.text + got_text
+                text_data.set_data("")
 
         #do_exec = True
         #try:

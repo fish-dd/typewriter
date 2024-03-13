@@ -10,7 +10,7 @@ def input_handler(allowed_chars, text_queue):
 
         match getchar:
             case key.BACKSPACE:
-                text = key.BACKSPACE
+                text = "code_bckspce"
             case key.ENTER:
                 text = "\n"
             case key.TAB:

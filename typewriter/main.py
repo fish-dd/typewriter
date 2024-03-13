@@ -4,7 +4,8 @@ from threading import Thread
 from key_input import input_handler
 from doc_ui import Doc_UI
 from time import sleep
-import os
+from os import system
+from sys import stdout
 
 class data_class():
     def set_data(self, data):
@@ -23,15 +24,18 @@ def render_call(doc1, text_data):
         except:
             text = ""
         text_data.set_data(text)
-        print(doc1.doc_output(text_data), end = "")
+        stdout.write(doc1.doc_output(text_data))
+        stdout.flush()
+        #print(doc1.doc_output(text_data), end = "")
         sleep(0.01)
 
 if __name__ == "__main__":
-    os.system(clear_command)
+    system(clear_command)
     renderer = Thread(target = render_call, args = (doc1, text_data), daemon = True)
     renderer.start()
     try:
         input_handler(allowed_chars, text_queue)
     except KeyboardInterrupt:
-        os.system(clear_command)
+        stdout.flush()
+        system(clear_command)
         print("typewriter α", end = "")
